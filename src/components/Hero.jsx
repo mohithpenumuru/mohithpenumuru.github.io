@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 
 const orbs = [
-  { w: 500, h: 500, top: '5%', left: '10%', bg: 'rgba(0,212,255,0.08)', delay: 0 },
-  { w: 350, h: 350, top: '55%', right: '5%', bg: 'rgba(123,97,255,0.07)', delay: 4 },
-  { w: 250, h: 250, bottom: '15%', left: '55%', bg: 'rgba(0,180,216,0.06)', delay: 8 },
+  { w: 500, h: 500, top: '5%', left: '10%', bg: 'rgba(139,92,246,0.1)', delay: 0 },
+  { w: 350, h: 350, top: '55%', right: '5%', bg: 'rgba(0,212,255,0.08)', delay: 4 },
+  { w: 250, h: 250, bottom: '15%', left: '55%', bg: 'rgba(59,130,246,0.07)', delay: 8 },
 ]
 
 const techStack = [
@@ -78,7 +78,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-accent font-medium text-sm md:text-base tracking-[0.25em] uppercase mb-6"
+          className="text-violet font-medium text-sm md:text-base tracking-[0.25em] uppercase mb-6"
         >
           Hello, I&apos;m
         </motion.p>
@@ -110,7 +110,7 @@ export default function Hero() {
           className="mb-8"
         >
           <div className="inline-flex items-center gap-2 glass px-5 py-2.5 rounded-full text-sm">
-            <span className="text-accent font-mono">&gt;</span>
+            <span className="text-violet font-mono">&gt;</span>
             <span className="text-gray-300 font-mono text-xs md:text-sm">
               <TypingRotator lines={dynamicLines} />
             </span>
@@ -130,8 +130,8 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 1.4 + i * 0.06 }}
-              className="text-xs font-medium text-accent/70 bg-accent/5 border border-accent/15 px-3 py-1.5 rounded-full
-                hover:bg-accent/10 hover:border-accent/30 transition-all duration-300 cursor-default"
+              className="text-xs font-medium text-violet/70 bg-violet/5 border border-violet/15 px-3 py-1.5 rounded-full
+                hover:bg-violet/10 hover:border-violet/30 transition-all duration-300 cursor-default"
             >
               {tech}
             </motion.span>
@@ -147,15 +147,15 @@ export default function Hero() {
         >
           <a
             href="#projects"
-            className="px-8 py-3.5 rounded-full bg-accent text-surface font-bold text-sm
-              hover:shadow-[0_0_35px_rgba(0,212,255,0.3)] transition-all duration-400 hover:scale-105"
+            className="px-8 py-3.5 rounded-full bg-gradient-to-r from-violet to-accent text-white font-bold text-sm
+              hover:shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-all duration-400 hover:scale-105"
           >
             View My Work
           </a>
           <a
             href="#contact"
             className="px-8 py-3.5 rounded-full border border-white/10 text-gray-300 font-semibold text-sm
-              hover:border-accent/40 hover:text-accent transition-all duration-300 group flex items-center gap-2"
+              hover:border-violet/40 hover:text-violet transition-all duration-300 group flex items-center gap-2"
           >
             Get In Touch
             <ChevronDown size={14} className="group-hover:translate-y-0.5 transition-transform" />
@@ -172,9 +172,9 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-5 h-8 rounded-full border-2 border-gray-700 flex items-start justify-center pt-1.5"
+          className="w-5 h-8 rounded-full border-2 border-violet/30 flex items-start justify-center pt-1.5"
         >
-          <div className="w-1 h-2 rounded-full bg-accent" />
+          <div className="w-1 h-2 rounded-full bg-violet" />
         </motion.div>
       </motion.div>
     </section>

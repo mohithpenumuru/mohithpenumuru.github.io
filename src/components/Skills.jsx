@@ -65,10 +65,13 @@ function SkillCard({ category, index }) {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.06 }}
-      className={`glass p-5 ${isAI ? 'border-emerald-500/10' : ''}`}
+      className={`skill-card glass p-5 ${isAI ? 'border-emerald-500/10' : ''}`}
     >
-      <h3 className="font-heading font-semibold text-white text-base mb-4 flex items-center gap-2">
-        <span className={`w-2 h-2 rounded-full ${isAI ? 'bg-emerald-400' : 'bg-accent'}`} />
+      {/* Hover accent bar on left edge */}
+      <div className={`skill-card-bar ${isAI ? '!bg-emerald-500/30' : ''}`} />
+
+      <h3 className="font-heading font-semibold text-white text-base mb-4 flex items-center gap-2 group-hover:translate-x-1 transition-transform">
+        <span className={`w-2 h-2 rounded-full ${isAI ? 'bg-emerald-400' : 'bg-violet'}`} />
         {category.title}
       </h3>
       <div className="flex flex-wrap gap-2">
@@ -78,10 +81,10 @@ function SkillCard({ category, index }) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.3, delay: index * 0.06 + si * 0.04 }}
-            className={`text-xs font-medium px-3 py-1.5 rounded-full border ${
+            className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors duration-300 ${
               isAI
-                ? 'text-emerald-400/90 bg-emerald-500/5 border-emerald-500/15'
-                : 'text-accent/80 bg-accent/5 border-accent/10'
+                ? 'text-emerald-400/90 bg-emerald-500/5 border-emerald-500/15 hover:bg-emerald-500/10'
+                : 'text-violet/80 bg-violet/5 border-violet/10 hover:bg-violet/10'
             }`}
           >
             {skill}

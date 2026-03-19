@@ -28,16 +28,16 @@ export default function Navbar() {
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'glass py-3 shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
+          ? 'glass py-3 shadow-[0_4px_30px_rgba(0,0,0,0.4)]'
           : 'py-5 bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a
           href="#hero"
-          className="font-heading font-bold text-xl text-white tracking-tight hover:text-accent transition-colors duration-300"
+          className="font-heading font-bold text-xl text-white tracking-tight hover:text-violet transition-colors duration-300"
         >
-          MP<span className="text-accent">.</span>
+          MP<span className="text-violet">.</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -45,7 +45,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-[13px] text-gray-400 hover:text-accent transition-colors duration-300 font-medium tracking-wide uppercase"
+              className="text-[13px] text-gray-400 hover:text-violet transition-colors duration-300 font-medium tracking-wide uppercase"
             >
               {link.label}
             </a>
@@ -54,8 +54,8 @@ export default function Navbar() {
             href="./resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[13px] font-semibold px-5 py-2 rounded-full border border-accent/30 text-accent
-              hover:bg-accent/10 hover:border-accent/50 transition-all duration-300"
+            className="text-[13px] font-semibold px-5 py-2 rounded-full border border-violet/30 text-violet
+              hover:bg-violet/10 hover:border-violet/50 transition-all duration-300"
           >
             Resume
           </a>
@@ -84,7 +84,7 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-gray-400 hover:text-accent transition-colors font-medium py-1"
+                  className="text-gray-400 hover:text-violet transition-colors font-medium py-1"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}

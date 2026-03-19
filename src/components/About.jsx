@@ -33,7 +33,7 @@ export default function About() {
             <div className="avatar-ring w-60 h-60 md:w-68 md:h-68">
               <div className="w-full h-full rounded-2xl overflow-hidden bg-surface">
                 {/* EDIT: Replace with <img src="your-photo.jpg" alt="Mohith Penumuru" className="w-full h-full object-cover" /> */}
-                <div className="w-full h-full bg-gradient-to-br from-accent/10 via-surface to-purple-900/15 flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-violet/10 via-surface to-accent/5 flex items-center justify-center">
                   <span className="font-heading text-6xl text-white/20 font-bold select-none">
                     MP
                   </span>
@@ -76,7 +76,7 @@ export default function About() {
                   key={text}
                   className="flex items-center gap-2 text-sm text-gray-400 glass px-4 py-2 rounded-full"
                 >
-                  <Icon size={14} className="text-accent" />
+                  <Icon size={14} className="text-violet" />
                   {text}
                 </div>
               ))}

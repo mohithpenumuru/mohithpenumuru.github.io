@@ -1,6 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Terminal, ArrowRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 
 export default function CTA() {
   const ref = useRef(null)
@@ -15,7 +15,7 @@ export default function CTA() {
           transition={{ duration: 0.7 }}
         >
           <h2 className="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl text-white mb-5 glow">
-            Let&apos;s Build Something<span className="text-accent">.</span>
+            Let&apos;s Build Something<span className="text-violet">.</span>
           </h2>
           <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
             Open to AI &amp; data engineering roles, consulting opportunities,
@@ -43,7 +43,7 @@ export default function CTA() {
           {/* Terminal content */}
           <div className="p-5 font-mono text-sm space-y-3">
             <div className="flex flex-wrap gap-x-1">
-              <span className="text-accent">&gt;</span>
+              <span className="text-violet">&gt;</span>
               <span className="text-gray-300"> mohith.penumuru</span>
               <span className="text-gray-600"> --status</span>
               <span className="text-emerald-400"> available</span>
@@ -56,22 +56,22 @@ export default function CTA() {
             </div>
 
             <div className="flex flex-wrap gap-x-1">
-              <span className="text-accent">&gt;</span>
+              <span className="text-violet">&gt;</span>
               <span className="text-gray-600"> --expertise</span>
-              <span className="text-purple-400"> &quot;AI Agents&quot;</span>
+              <span className="text-violet/80"> &quot;AI Agents&quot;</span>
               <span className="text-gray-600"> --stack</span>
               <span className="text-cyan-400"> &quot;Databricks, AWS, LangChain, Snowflake&quot;</span>
             </div>
 
             <div className="flex items-center gap-1">
-              <span className="text-accent">&gt;</span>
+              <span className="text-violet">&gt;</span>
               <span className="text-gray-500"> Ready to collaborate</span>
-              <span className="cursor-blink text-accent" />
+              <span className="cursor-blink" />
             </div>
           </div>
         </motion.div>
 
-        {/* CTA button */}
+        {/* CTA button with sliding icon animation */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -79,11 +79,15 @@ export default function CTA() {
         >
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-surface font-bold text-sm
-              hover:shadow-[0_0_40px_rgba(0,212,255,0.3)] transition-all duration-400 hover:scale-105 group"
+            className="btn-slide inline-flex items-center gap-2 h-12 pl-6 pr-14 rounded-full bg-gradient-to-r from-violet to-accent text-white font-bold text-sm
+              hover:shadow-[0_0_50px_rgba(139,92,246,0.3)] transition-all duration-500 hover:scale-105 group relative"
           >
-            Start a Conversation
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            <span className="relative z-10 transition-all duration-500">
+              Start a Conversation
+            </span>
+            <div className="btn-icon w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+              <ArrowUpRight size={16} />
+            </div>
           </a>
         </motion.div>
       </div>

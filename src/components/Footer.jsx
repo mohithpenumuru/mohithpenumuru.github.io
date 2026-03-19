@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-sm text-gray-600 flex items-center gap-1.5">
           &copy; {new Date().getFullYear()} Mohith Penumuru. Crafted with
-          <Heart size={12} className="text-accent" />
+          <Heart size={12} className="text-violet" />
         </p>
 
         <div className="flex items-center gap-5">
@@ -20,7 +20,7 @@ export default function Footer() {
               href={href}
               target={href.startsWith('mailto') ? undefined : '_blank'}
               rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-              className="text-gray-600 hover:text-accent transition-colors duration-300"
+              className="text-gray-600 hover:text-violet transition-colors duration-300"
               aria-label={label}
             >
               <Icon size={16} />

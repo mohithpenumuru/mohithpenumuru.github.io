@@ -15,7 +15,7 @@ const projects = [
       stages: [
         { name: 'Sources', color: 'bg-amber-500/80' },
         { name: 'S3 / Delta Lake', color: 'bg-orange-500/80' },
-        { name: 'PySpark Transform', color: 'bg-accent' },
+        { name: 'PySpark Transform', color: 'bg-violet' },
         { name: 'Snowflake', color: 'bg-cyan-400/80' },
         { name: 'Analytics', color: 'bg-emerald-500/80' },
       ],
@@ -50,8 +50,8 @@ const projects = [
       label: 'CI/CD Pipeline',
       stages: [
         { name: 'Code Push', color: 'bg-gray-500' },
-        { name: 'GitHub Actions', color: 'bg-purple-500/80' },
-        { name: 'Terraform Plan', color: 'bg-violet-500/80' },
+        { name: 'GitHub Actions', color: 'bg-violet' },
+        { name: 'Terraform Plan', color: 'bg-violet/70' },
         { name: 'Deploy', color: 'bg-accent' },
         { name: 'Monitor', color: 'bg-emerald-500/80' },
       ],
@@ -69,7 +69,7 @@ const projects = [
       stages: [
         { name: 'User Input', color: 'bg-gray-500' },
         { name: 'LangChain', color: 'bg-emerald-600/80' },
-        { name: 'LLM', color: 'bg-purple-500/80' },
+        { name: 'LLM', color: 'bg-violet' },
         { name: 'MCP Server', color: 'bg-accent' },
         { name: 'Response', color: 'bg-emerald-500/80' },
       ],
@@ -118,27 +118,27 @@ function ProjectCard({ project, index }) {
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="glass glass-hover p-6 flex flex-col group"
+      className="glass project-glow p-6 flex flex-col group"
       onMouseEnter={() => setShowPipeline(true)}
       onMouseLeave={() => setShowPipeline(false)}
     >
       <div className="flex items-start justify-between mb-3">
-        <span className="text-accent/20 font-heading font-bold text-4xl select-none">
+        <span className="text-violet/20 font-heading font-bold text-4xl select-none">
           {String(index + 1).padStart(2, '0')}
         </span>
         <button
           onClick={() => setShowPipeline(!showPipeline)}
           className={`text-[10px] uppercase tracking-wider font-medium px-2.5 py-1 rounded-full border transition-all duration-300 ${
             showPipeline
-              ? 'text-accent border-accent/30 bg-accent/10'
-              : 'text-gray-600 border-white/5 hover:border-accent/20 hover:text-gray-400'
+              ? 'text-violet border-violet/30 bg-violet/10'
+              : 'text-gray-600 border-white/5 hover:border-violet/20 hover:text-gray-400'
           }`}
         >
           Pipeline
         </button>
       </div>
 
-      <h3 className="font-heading font-bold text-xl text-white mb-3 group-hover:text-accent transition-colors duration-300">
+      <h3 className="font-heading font-bold text-xl text-white mb-3 group-hover:text-violet transition-colors duration-300">
         {project.title}
       </h3>
 
@@ -146,29 +146,26 @@ function ProjectCard({ project, index }) {
         {project.description}
       </p>
 
-      {/* Pipeline visualization */}
       <PipelineViz pipeline={project.pipeline} active={showPipeline} />
 
-      {/* Tech tags */}
       <div className="flex flex-wrap gap-2 mb-5 mt-4">
         {project.tech.map((t) => (
           <span
             key={t}
-            className="text-xs font-medium text-accent/80 bg-accent/5 border border-accent/10 px-2.5 py-1 rounded-full"
+            className="text-xs font-medium text-violet/80 bg-violet/5 border border-violet/10 px-2.5 py-1 rounded-full"
           >
             {t}
           </span>
         ))}
       </div>
 
-      {/* Links */}
       <div className="flex items-center gap-4">
         {project.github && project.github !== '#' && (
           <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-accent transition-colors"
+            className="text-gray-500 hover:text-violet transition-colors"
             aria-label="View source code"
           >
             <Github size={18} />
@@ -179,7 +176,7 @@ function ProjectCard({ project, index }) {
             href={project.live}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-accent transition-colors"
+            className="text-gray-500 hover:text-violet transition-colors"
             aria-label="View live demo"
           >
             <ExternalLink size={18} />

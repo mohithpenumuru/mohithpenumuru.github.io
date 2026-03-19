@@ -29,12 +29,12 @@ export default function Publication() {
           className="glass p-8 relative overflow-hidden group"
         >
           {/* Decorative gradient */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-accent/5 to-transparent rounded-bl-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-violet/5 to-transparent rounded-bl-full pointer-events-none" />
 
           <div className="relative z-10">
             <div className="flex items-start gap-4 mb-5">
-              <div className="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 mt-1">
-                <BookOpen size={20} className="text-accent" />
+              <div className="w-11 h-11 rounded-xl bg-violet/10 flex items-center justify-center shrink-0 mt-1">
+                <BookOpen size={20} className="text-violet" />
               </div>
               <div>
                 <h3 className="font-heading font-bold text-lg text-white leading-snug mb-2">
@@ -49,7 +49,7 @@ export default function Publication() {
             </div>
 
             <div className="flex flex-wrap gap-3 mb-5 ml-[60px]">
-              <span className="text-xs text-accent/80 bg-accent/5 border border-accent/10 px-3 py-1 rounded-full">
+              <span className="text-xs text-violet/80 bg-violet/5 border border-violet/10 px-3 py-1 rounded-full">
                 Springer Nature
               </span>
               <span className="text-xs text-gray-500 bg-white/[0.03] border border-white/5 px-3 py-1 rounded-full">
@@ -75,7 +75,7 @@ export default function Publication() {
                 href="https://link.springer.com/chapter/10.1007/978-981-99-2832-3_93"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-accent hover:text-white
+                className="inline-flex items-center gap-2 text-sm text-violet hover:text-white
                   transition-colors duration-300 font-medium"
               >
                 View on Springer

@@ -9,7 +9,6 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // EDIT: Connect to your backend, Formspree, or email service
     setSubmitted(true)
     setTimeout(() => setSubmitted(false), 3000)
   }
@@ -31,7 +30,6 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid md:grid-cols-[1fr_340px] gap-12">
-          {/* Contact form */}
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: -30 }}
@@ -49,7 +47,7 @@ export default function Contact() {
                   type="text"
                   required
                   className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600
-                    focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors"
+                    focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
                   placeholder="John Doe"
                 />
               </div>
@@ -62,7 +60,7 @@ export default function Contact() {
                   type="email"
                   required
                   className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600
-                    focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors"
+                    focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
                   placeholder="john@example.com"
                 />
               </div>
@@ -76,7 +74,7 @@ export default function Contact() {
                 id="subject"
                 type="text"
                 className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600
-                  focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors"
+                  focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
                 placeholder="Project inquiry"
               />
             </div>
@@ -90,15 +88,15 @@ export default function Contact() {
                 rows={5}
                 required
                 className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600
-                  focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/20 transition-colors resize-none"
+                  focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors resize-none"
                 placeholder="Tell me about your project..."
               />
             </div>
 
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-accent/10 border border-accent/30 text-accent font-medium text-sm
-                hover:bg-accent/20 hover:border-accent/50 hover:shadow-[0_0_20px_rgba(0,212,255,0.1)]
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-violet/10 border border-violet/30 text-violet font-medium text-sm
+                hover:bg-violet/20 hover:border-violet/50 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]
                 transition-all duration-300"
             >
               {submitted ? 'Sent!' : 'Send Message'}
@@ -106,7 +104,6 @@ export default function Contact() {
             </button>
           </motion.form>
 
-          {/* Contact info sidebar */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -124,20 +121,20 @@ export default function Contact() {
               <div className="space-y-3">
                 <a
                   href="mailto:mohithpenumuru1@gmail.com"
-                  className="flex items-center gap-3 text-sm text-gray-400 hover:text-accent transition-colors"
+                  className="flex items-center gap-3 text-sm text-gray-400 hover:text-violet transition-colors"
                 >
-                  <Mail size={15} className="text-accent" />
+                  <Mail size={15} className="text-violet" />
                   mohithpenumuru1@gmail.com
                 </a>
                 <a
                   href="tel:+919052472001"
-                  className="flex items-center gap-3 text-sm text-gray-400 hover:text-accent transition-colors"
+                  className="flex items-center gap-3 text-sm text-gray-400 hover:text-violet transition-colors"
                 >
-                  <Phone size={15} className="text-accent" />
+                  <Phone size={15} className="text-violet" />
                   +91 9052472001
                 </a>
                 <div className="flex items-center gap-3 text-sm text-gray-400">
-                  <MapPin size={15} className="text-accent" />
+                  <MapPin size={15} className="text-violet" />
                   Bengaluru, India
                 </div>
               </div>
@@ -159,7 +156,7 @@ export default function Contact() {
                     target={href.startsWith('mailto') ? undefined : '_blank'}
                     rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
                     className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center
-                      text-gray-500 hover:text-accent hover:border-accent/30 hover:bg-accent/5 transition-all duration-300"
+                      text-gray-500 hover:text-violet hover:border-violet/30 hover:bg-violet/5 transition-all duration-300"
                     aria-label={label}
                   >
                     <Icon size={16} />

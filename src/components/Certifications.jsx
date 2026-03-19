@@ -95,7 +95,7 @@ function CertCard({ cert, index }) {
       initial={{ opacity: 0, y: 25, scale: 0.95 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.45, delay: index * 0.06 }}
-      className={`relative glass glass-hover p-5 group overflow-hidden`}
+      className="relative glass glass-hover p-5 group overflow-hidden"
     >
       {/* Gradient glow overlay */}
       <div
@@ -103,7 +103,6 @@ function CertCard({ cert, index }) {
       />
 
       <div className="relative z-10">
-        {/* Provider badge */}
         <div className="flex items-center justify-between mb-3">
           <span
             className={`text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full ${cert.bg} ${cert.text}`}
@@ -113,7 +112,6 @@ function CertCard({ cert, index }) {
           <Award size={16} className={`${cert.text} opacity-50`} />
         </div>
 
-        {/* Cert name */}
         <h3 className="font-heading font-semibold text-white text-sm leading-snug">
           {cert.name}
         </h3>

@@ -5,10 +5,11 @@ export default {
     extend: {
       colors: {
         accent: '#00d4ff',
+        violet: '#8b5cf6',
         surface: {
-          DEFAULT: '#060b18',
-          light: '#0c1628',
-          lighter: '#121e36',
+          DEFAULT: '#030014',
+          light: '#0a0a1a',
+          lighter: '#110f1f',
         },
       },
       fontFamily: {
