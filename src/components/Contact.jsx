@@ -3,6 +3,9 @@ import { useRef, useState } from 'react'
 import { Mail, Linkedin, Github, Send, MapPin, Phone } from 'lucide-react'
 import SectionHeader from './ui/SectionHeader'
 
+// Paste your Web3Forms access key here. Get one (free) at https://web3forms.com
+const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY'
+
 function TerminalBlock() {
   return (
     <div className="glass overflow-hidden">
@@ -53,13 +56,43 @@ function TerminalBlock() {
 export default function Contact() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    setStatus('sending')
+    setErrorMsg('')
+
+    const formData = new FormData(e.target)
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY)
+    if (!formData.get('subject')) {
+      formData.set('subject', 'New message from portfolio site')
+    }
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+
+      if (data.success) {
+        setStatus('success')
+        e.target.reset()
+        setTimeout(() => setStatus('idle'), 4000)
+      } else {
+        setStatus('error')
+        setErrorMsg(data.message || 'Submission failed. Please try again.')
+      }
+    } catch {
+      setStatus('error')
+      setErrorMsg('Network error. Please check your connection and try again.')
+    }
   }
+
+  const sending = status === 'sending'
+  const buttonLabel = sending ? 'Sending...' : status === 'success' ? 'Sent' : status === 'error' ? 'Try Again' : 'Send Message'
 
   return (
     <section id="contact" className="section-pad" ref={ref}>
@@ -79,11 +112,21 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="glass p-8 space-y-5"
           >
+            {/* Honeypot — bots fill this, humans don't see it */}
+            <input
+              type="checkbox"
+              name="botcheck"
+              tabIndex={-1}
+              autoComplete="off"
+              style={{ display: 'none' }}
+            />
+            <input type="hidden" name="from_name" value="Portfolio Contact Form" />
+
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="name" className="font-mono text-[11px] text-ink-dim uppercase tracking-wider mb-1.5 block">Name</label>
                 <input
-                  id="name" type="text" required
+                  id="name" name="name" type="text" required
                   className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-ink placeholder-ink-faint
                     focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
                   placeholder="John Doe"
@@ -92,7 +135,7 @@ export default function Contact() {
               <div>
                 <label htmlFor="email" className="font-mono text-[11px] text-ink-dim uppercase tracking-wider mb-1.5 block">Email</label>
                 <input
-                  id="email" type="email" required
+                  id="email" name="email" type="email" required
                   className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-ink placeholder-ink-faint
                     focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
                   placeholder="john@example.com"
@@ -103,7 +146,7 @@ export default function Contact() {
             <div>
               <label htmlFor="subject" className="font-mono text-[11px] text-ink-dim uppercase tracking-wider mb-1.5 block">Subject</label>
               <input
-                id="subject" type="text"
+                id="subject" name="subject" type="text"
                 className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-ink placeholder-ink-faint
                   focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
                 placeholder="Project inquiry"
@@ -113,21 +156,35 @@ export default function Contact() {
             <div>
               <label htmlFor="message" className="font-mono text-[11px] text-ink-dim uppercase tracking-wider mb-1.5 block">Message</label>
               <textarea
-                id="message" rows={5} required
+                id="message" name="message" rows={5} required
                 className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-ink placeholder-ink-faint
                   focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors resize-none"
                 placeholder="Tell me about your project..."
               />
             </div>
 
-            <button
-              type="submit"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-violet to-accent text-ink font-mono text-[11px] uppercase tracking-wider
-                hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all duration-300"
-            >
-              {submitted ? 'Sent' : 'Send Message'}
-              <Send size={13} />
-            </button>
+            <div className="flex flex-wrap items-center gap-4">
+              <button
+                type="submit"
+                disabled={sending}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-violet to-accent text-ink font-mono text-[11px] uppercase tracking-wider
+                  hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {buttonLabel}
+                <Send size={13} />
+              </button>
+
+              {status === 'success' && (
+                <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider">
+                  Thanks — I will get back to you soon.
+                </span>
+              )}
+              {status === 'error' && (
+                <span className="font-mono text-[11px] text-red-400">
+                  {errorMsg}
+                </span>
+              )}
+            </div>
           </motion.form>
 
           <motion.div
