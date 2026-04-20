@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { useScroll, useTransform, motion, useInView } from 'framer-motion'
 import { GraduationCap } from 'lucide-react'
+import SectionHeader from './ui/SectionHeader'
 
 const timelineData = [
   {
     title: 'Deloitte',
     content: {
       role: 'AI Engineer',
-      duration: 'Sep 2024 — Present',
+      duration: 'Sep 2025 — Present',
       location: 'Bengaluru, India',
       highlights: [
+        'Building MCP server marketplace and tooling — designing reusable Model Context Protocol integrations that let enterprise agents plug into internal data, APIs, and tools.',
+        'Multi-agent orchestration with LangGraph and AWS Strands — composing collaborating agent graphs (planner → researcher → executor) for complex enterprise workflows.',
         'Building and evaluating AI Agents using multiple agentic workflows and frameworks',
-        'Developing MCP (Model Context Protocol) servers for enterprise AI integrations',
         'Designing and implementing AI agentic workflows for client solutions',
         'Working with Large Language Models (LLMs), LangChain, and Generative AI technologies',
         'Building AI-powered automation pipelines for intelligent decision-making',
@@ -51,8 +53,6 @@ const timelineData = [
 export default function Experience() {
   const sectionRef = useRef(null)
   const timelineRef = useRef(null)
-  const headingRef = useRef(null)
-  const headingInView = useInView(headingRef, { once: true, margin: '-100px' })
   const [height, setHeight] = useState(0)
 
   useEffect(() => {
@@ -72,51 +72,35 @@ export default function Experience() {
 
   return (
     <section id="experience" className="section-pad" ref={sectionRef}>
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          ref={headingRef}
-          initial={{ opacity: 0, y: 40 }}
-          animate={headingInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-        >
-          <p className="text-accent font-medium text-sm tracking-[0.2em] uppercase mb-3">
-            Experience
-          </p>
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-white mb-4">
-            Where I&apos;ve worked<span className="text-accent">.</span>
-          </h2>
-          <p className="text-gray-500 text-sm mb-4 max-w-lg">
-            My professional journey in AI &amp; Data Engineering.
-          </p>
-        </motion.div>
+      <div className="max-w-[1120px] mx-auto">
+        <SectionHeader
+          number="02"
+          title="Where I have built."
+          italicWord="built"
+          subtitle="My professional journey in AI & Data engineering."
+        />
 
         <div ref={timelineRef} className="relative pb-10">
-          {timelineData.map((item, index) => {
-            const isEdu = item.content.isEducation
-            return (
-              <TimelineEntry
-                key={index}
-                title={item.title}
-                content={item.content}
-                isEducation={isEdu}
-              />
-            )
-          })}
+          {timelineData.map((item, index) => (
+            <TimelineEntry
+              key={index}
+              title={item.title}
+              content={item.content}
+              isEducation={item.content.isEducation}
+            />
+          ))}
 
-          {/* Scroll-animated progress line */}
           <div
             className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-gradient-to-b from-transparent via-white/[0.04] to-transparent"
             style={{
               height: height + 'px',
-              maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
+              maskImage:
+                'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
             }}
           >
             <motion.div
-              style={{
-                height: heightTransform,
-                opacity: opacityTransform,
-              }}
-              className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-violet via-accent to-transparent rounded-full"
+              style={{ height: heightTransform, opacity: opacityTransform }}
+              className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-violet via-violet/60 to-transparent rounded-full"
             />
           </div>
         </div>
@@ -131,33 +115,31 @@ function TimelineEntry({ title, content, isEducation }) {
 
   return (
     <div ref={ref} className="flex justify-start pt-10 md:pt-20 md:gap-10">
-      {/* Sticky left column */}
       <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
         <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-surface flex items-center justify-center">
           <div
             className={`h-4 w-4 rounded-full border ${
               isEducation
                 ? 'bg-violet/20 border-violet/40'
-                : 'bg-accent/10 border-accent/30'
+                : 'bg-violet/10 border-violet/40'
             }`}
           />
         </div>
-        <h3 className="hidden md:block text-xl md:pl-20 md:text-4xl font-heading font-bold text-white/10">
+        <h3 className="hidden md:block font-display text-3xl md:pl-20 md:text-5xl text-ink/10 tracking-tight">
           {title}
         </h3>
       </div>
 
-      {/* Right content */}
       <div className="relative pl-20 pr-4 md:pl-4 w-full">
-        <h3 className="md:hidden block text-2xl mb-4 text-left font-heading font-bold text-white/15">
+        <h3 className="md:hidden block font-display text-2xl mb-4 text-ink/15 tracking-tight">
           {title}
         </h3>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className={`glass p-6 ${isEducation ? 'border-violet/10' : ''}`}
+          transition={{ duration: 0.6 }}
+          className="glass p-7"
         >
           {isEducation ? (
             <>
@@ -165,33 +147,28 @@ function TimelineEntry({ title, content, isEducation }) {
                 <div className="w-9 h-9 rounded-lg bg-violet/10 flex items-center justify-center">
                   <GraduationCap size={18} className="text-violet" />
                 </div>
-                <p className="text-violet text-xs font-medium tracking-wider uppercase">
+                <p className="font-mono text-[11px] text-violet tracking-widest uppercase">
                   {content.duration}
                 </p>
               </div>
-              <h4 className="font-heading font-bold text-lg text-white mb-1">
-                {content.degree}
-              </h4>
-              <p className="text-gray-400 text-sm mb-1">{content.field}</p>
-              <p className="text-gray-600 text-xs">{content.institution}</p>
+              <h4 className="font-display text-xl text-ink mb-1">{content.degree}</h4>
+              <p className="text-ink-muted text-sm mb-1">{content.field}</p>
+              <p className="text-ink-dim text-xs">{content.institution}</p>
             </>
           ) : (
             <>
-              <p className="text-accent text-xs font-medium tracking-wider uppercase mb-2">
+              <p className="font-mono text-[11px] text-accent tracking-widest uppercase mb-3">
                 {content.duration}
               </p>
-              <h4 className="font-heading font-bold text-lg text-white mb-1">
-                {content.role}
-              </h4>
-              <p className="text-gray-600 text-xs mb-4">{content.location}</p>
-              <ul className="space-y-2">
+              <h4 className="font-display text-2xl text-ink mb-1 tracking-tight">{content.role}</h4>
+              <p className="font-mono text-[10px] text-ink-dim uppercase tracking-wider mb-5">
+                {content.location}
+              </p>
+              <ul className="space-y-2.5">
                 {content.highlights.map((h, i) => (
-                  <li
-                    key={i}
-                    className="text-gray-400 text-sm leading-relaxed flex gap-2"
-                  >
-                    <span className="text-accent/60 mt-1 shrink-0">&#8226;</span>
-                    {h}
+                  <li key={i} className="text-ink-muted text-sm leading-relaxed flex gap-3">
+                    <span className="text-violet/60 mt-1.5 shrink-0 text-[10px]">▸</span>
+                    <span>{h}</span>
                   </li>
                 ))}
               </ul>

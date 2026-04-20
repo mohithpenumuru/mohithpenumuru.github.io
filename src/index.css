@@ -14,9 +14,9 @@
     scroll-padding-top: 80px;
   }
   body {
-    font-family: 'Manrope', system-ui, sans-serif;
-    background-color: #030014;
-    color: #e0e7f1;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #06060a;
+    color: #fafafa;
     overflow-x: hidden;
   }
   ::selection {
@@ -27,7 +27,7 @@
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #030014; }
+::-webkit-scrollbar-track { background: #06060a; }
 ::-webkit-scrollbar-thumb { background: #1a1530; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.4); }
 
@@ -56,7 +56,7 @@
 /* ── Aurora Hero Background ── */
 .aurora-bg {
   position: relative;
-  background: #030014;
+  background: #06060a;
   overflow: hidden;
 }
 .aurora-bg::before {
@@ -106,9 +106,9 @@
 /* ── Glassmorphism ── */
 .glass {
   background: rgba(8, 8, 24, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(139, 92, 246, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
 }
 .glass-hover {
@@ -132,7 +132,7 @@
 /* ── Section Divider ── */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.15), rgba(0, 212, 255, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.075), rgba(34, 211, 238, 0.05), transparent);
 }
 
 /* ── Spinning Avatar Border ── */
@@ -270,6 +270,6 @@
 /* ── Section Util ── */
 @layer components {
   .section-pad {
-    @apply px-6 py-24 md:px-12 lg:px-24 xl:px-32;
+    @apply px-6 py-32 md:px-12 md:py-40 lg:px-24 xl:px-32;
   }
 }

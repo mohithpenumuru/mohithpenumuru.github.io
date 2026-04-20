@@ -6,7 +6,6 @@ import Skills from './components/Skills'
 import Certifications from './components/Certifications'
 import Projects from './components/Projects'
 import Publication from './components/Publication'
-import CTA from './components/CTA'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 
@@ -18,22 +17,12 @@ export default function App() {
         <div
           className="mesh-blob"
           style={{
-            width: 800,
-            height: 800,
-            top: '-5%',
+            width: 900,
+            height: 900,
+            top: '-10%',
             left: '-15%',
-            background: 'radial-gradient(circle, rgba(139,92,246,0.25), transparent 70%)',
-          }}
-        />
-        <div
-          className="mesh-blob"
-          style={{
-            width: 600,
-            height: 600,
-            top: '25%',
-            right: '-10%',
-            background: 'radial-gradient(circle, rgba(0,212,255,0.15), transparent 70%)',
-            animationDelay: '6s',
+            background: 'radial-gradient(circle, rgba(139,92,246,0.22), transparent 70%)',
+            animationDuration: '35s',
           }}
         />
         <div
@@ -41,21 +30,11 @@ export default function App() {
           style={{
             width: 700,
             height: 700,
-            top: '55%',
-            left: '-12%',
-            background: 'radial-gradient(circle, rgba(59,130,246,0.12), transparent 70%)',
+            bottom: '-5%',
+            right: '-10%',
+            background: 'radial-gradient(circle, rgba(34,211,238,0.13), transparent 70%)',
+            animationDuration: '35s',
             animationDelay: '12s',
-          }}
-        />
-        <div
-          className="mesh-blob"
-          style={{
-            width: 500,
-            height: 500,
-            bottom: '5%',
-            right: '5%',
-            background: 'radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%)',
-            animationDelay: '18s',
           }}
         />
       </div>
@@ -76,7 +55,6 @@ export default function App() {
         <Projects />
         <div className="section-divider" />
         <Publication />
-        <CTA />
         <div className="section-divider" />
         <Contact />
         <Footer />

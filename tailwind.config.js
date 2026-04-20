@@ -4,17 +4,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#00d4ff',
+        accent: '#22d3ee',
         violet: '#8b5cf6',
         surface: {
-          DEFAULT: '#030014',
-          light: '#0a0a1a',
-          lighter: '#110f1f',
+          DEFAULT: '#06060a',
+          light: '#0c0c12',
+          lighter: '#14141c',
+        },
+        ink: {
+          DEFAULT: '#fafafa',
+          muted: '#94a3b8',
+          dim: '#737373',
+          faint: '#404040',
         },
       },
       fontFamily: {
-        heading: ['"Syne"', 'sans-serif'],
-        body: ['"Manrope"', 'system-ui', 'sans-serif'],
+        display: ['"Instrument Serif"', 'Georgia', 'serif'],
+        body: ['"Inter"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
     },
   },

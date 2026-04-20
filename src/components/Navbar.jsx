@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Certifications', href: '#certifications' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { num: '01', label: 'About', href: '#about' },
+  { num: '02', label: 'Work', href: '#experience' },
+  { num: '03', label: 'Skills', href: '#skills' },
+  { num: '04', label: 'Certs', href: '#certifications' },
+  { num: '05', label: 'Projects', href: '#projects' },
+  { num: '07', label: 'Contact', href: '#contact' },
 ]
 
 export default function Navbar() {
@@ -35,18 +35,19 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a
           href="#hero"
-          className="font-heading font-bold text-xl text-white tracking-tight hover:text-violet transition-colors duration-300"
+          className="font-display text-2xl text-ink tracking-tight hover:text-violet transition-colors duration-300"
         >
-          MP<span className="text-violet">.</span>
+          MP<em className="not-italic text-violet">.</em>
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-[13px] text-gray-400 hover:text-violet transition-colors duration-300 font-medium tracking-wide uppercase"
+              className="font-mono text-[11px] text-ink-muted hover:text-ink transition-colors duration-300 tracking-wider"
             >
+              <span className="text-violet/70 mr-1.5">{link.num}</span>
               {link.label}
             </a>
           ))}
@@ -54,10 +55,10 @@ export default function Navbar() {
             href="./resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[13px] font-semibold px-5 py-2 rounded-full border border-violet/30 text-violet
-              hover:bg-violet/10 hover:border-violet/50 transition-all duration-300"
+            className="font-mono text-[11px] tracking-wider px-4 py-2 rounded-full border border-violet/40 text-violet
+              hover:bg-violet hover:text-ink transition-all duration-300"
           >
-            Resume
+            RESUME
           </a>
         </div>
 
@@ -84,9 +85,10 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-gray-400 hover:text-violet transition-colors font-medium py-1"
+                  className="font-mono text-sm text-ink-muted hover:text-violet transition-colors py-1"
                   onClick={() => setMobileOpen(false)}
                 >
+                  <span className="text-violet/70 mr-2">{link.num}</span>
                   {link.label}
                 </a>
               ))}

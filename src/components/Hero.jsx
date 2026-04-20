@@ -1,22 +1,27 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
-
-const orbs = [
-  { w: 500, h: 500, top: '5%', left: '10%', bg: 'rgba(139,92,246,0.1)', delay: 0 },
-  { w: 350, h: 350, top: '55%', right: '5%', bg: 'rgba(0,212,255,0.08)', delay: 4 },
-  { w: 250, h: 250, bottom: '15%', left: '55%', bg: 'rgba(59,130,246,0.07)', delay: 8 },
-]
+import RadialOrbital from './ui/RadialOrbital'
+import StatusPill from './ui/StatusPill'
 
 const techStack = [
   'Databricks', 'AWS', 'LangChain', 'PySpark', 'Snowflake', 'Terraform', 'Azure', 'GCP',
 ]
 
 const dynamicLines = [
-  'Building AI Agents & MCP Servers at Deloitte',
-  'Designing scalable data pipelines on AWS & Databricks',
-  'Turning raw data into enterprise intelligence — at scale',
-  '10x Certified across AWS, Databricks, Snowflake, GCP & Azure',
+  '> Building AI agents & MCP servers at Deloitte',
+  '> Orchestrating multi-agent systems with LangGraph & AWS Strands',
+  '> Designing data platforms on AWS, Databricks & Snowflake',
+  '> 10x certified across AWS, Databricks, Snowflake, GCP & Azure',
+]
+
+const orbitalNodes = [
+  { label: 'LangGraph',    ringIndex: 0, angle: -30 },
+  { label: 'AWS Strands',  ringIndex: 0, angle: 60 },
+  { label: 'MCP',          ringIndex: 1, angle: 200 },
+  { label: 'Databricks',   ringIndex: 0, angle: 150 },
+  { label: 'LLM',          ringIndex: 2, angle: 90 },
+  { label: 'Snowflake',    ringIndex: 1, angle: 320 },
 ]
 
 function TypingRotator({ lines }) {
@@ -29,11 +34,11 @@ function TypingRotator({ lines }) {
     let timeout
 
     if (!isDeleting && displayed.length < current.length) {
-      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 40)
+      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 35)
     } else if (!isDeleting && displayed.length === current.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 2000)
+      timeout = setTimeout(() => setIsDeleting(true), 2200)
     } else if (isDeleting && displayed.length > 0) {
-      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length - 1)), 20)
+      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length - 1)), 18)
     } else if (isDeleting && displayed.length === 0) {
       setIsDeleting(false)
       setLineIndex((lineIndex + 1) % lines.length)
@@ -43,7 +48,7 @@ function TypingRotator({ lines }) {
   }, [displayed, isDeleting, lineIndex, lines])
 
   return (
-    <span>
+    <span className="font-mono text-xs md:text-sm text-ink-muted">
       {displayed}
       <span className="cursor-blink" />
     </span>
@@ -54,107 +59,100 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center aurora-bg overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 pt-24 pb-16"
     >
-      {orbs.map((orb, i) => (
-        <div
-          key={i}
-          className="orb"
-          style={{
-            width: orb.w,
-            height: orb.h,
-            top: orb.top,
-            left: orb.left,
-            right: orb.right,
-            bottom: orb.bottom,
-            background: orb.bg,
-            animationDelay: `${orb.delay}s`,
-          }}
+      {/* Subtle radial-gradient backdrop behind the orbital (CSS, no WebGL) */}
+      <div className="absolute inset-0 aurora-bg pointer-events-none opacity-50" />
+
+      {/* Centerpiece orbital */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+        className="relative z-10 mb-12"
+      >
+        <RadialOrbital
+          size={320}
+          nodes={orbitalNodes}
+          caption="CORE → AGENTS → TOOLS → MCP"
+          intensity="full"
         />
-      ))}
+      </motion.div>
 
-      <div className="relative z-10 text-center px-6 max-w-4xl">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-violet font-medium text-sm md:text-base tracking-[0.25em] uppercase mb-6"
-        >
-          Hello, I&apos;m
-        </motion.p>
-
+      <div className="relative z-10 text-center max-w-3xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="font-heading font-extrabold text-5xl md:text-7xl lg:text-[5.5rem] text-white glow leading-[1.05] mb-6"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="font-display text-5xl md:text-7xl lg:text-[5.5rem] text-ink leading-[1.02] tracking-tight mb-6"
         >
-          Mohith Penumuru
+          Engineering the{' '}
+          <em className="font-display italic bg-gradient-to-r from-violet to-accent bg-clip-text text-transparent">
+            AI-native
+          </em>{' '}
+          era.
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-gray-400 text-lg md:text-xl lg:text-2xl font-light max-w-3xl mx-auto mb-5 leading-relaxed"
+          transition={{ duration: 0.6, delay: 0.85 }}
+          className="text-ink-muted text-lg md:text-xl font-light max-w-2xl mx-auto mb-6 leading-relaxed"
         >
-          AI Engineer | Data Engineer — Building Intelligent Systems
-          with AI Agents, Cloud &amp; Data at Scale
+          AI Engineer at Deloitte — building agents, MCP servers, and data platforms at enterprise scale.
         </motion.p>
 
-        {/* Dynamic typing line */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.1 }}
-          className="mb-8"
+          transition={{ duration: 0.6, delay: 1.05 }}
+          className="mb-8 flex justify-center"
         >
-          <div className="inline-flex items-center gap-2 glass px-5 py-2.5 rounded-full text-sm">
-            <span className="text-violet font-mono">&gt;</span>
-            <span className="text-gray-300 font-mono text-xs md:text-sm">
-              <TypingRotator lines={dynamicLines} />
-            </span>
-          </div>
+          <TypingRotator lines={dynamicLines} />
         </motion.div>
 
-        {/* Tech stack badges */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.3 }}
-          className="flex flex-wrap justify-center gap-2 mb-10"
+          transition={{ duration: 0.5, delay: 1.2 }}
+          className="flex flex-wrap justify-center gap-1.5 mb-8"
         >
-          {techStack.map((tech, i) => (
-            <motion.span
+          {techStack.map((tech) => (
+            <span
               key={tech}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 1.4 + i * 0.06 }}
-              className="text-xs font-medium text-violet/70 bg-violet/5 border border-violet/15 px-3 py-1.5 rounded-full
-                hover:bg-violet/10 hover:border-violet/30 transition-all duration-300 cursor-default"
+              className="font-mono text-[10px] text-ink-muted bg-white/[0.02] border border-white/10 px-2.5 py-1 rounded-full
+                hover:border-violet/30 hover:text-violet transition-all duration-300 cursor-default"
             >
               {tech}
-            </motion.span>
+            </span>
           ))}
         </motion.div>
 
-        {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.6 }}
+          transition={{ duration: 0.5, delay: 1.35 }}
+          className="flex justify-center mb-8"
+        >
+          <StatusPill label="AVAILABLE FOR SELECT PROJECTS" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.5 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a
             href="#projects"
-            className="px-8 py-3.5 rounded-full bg-gradient-to-r from-violet to-accent text-white font-bold text-sm
+            className="px-8 py-3.5 rounded-full bg-gradient-to-r from-violet to-accent text-ink font-semibold text-sm
               hover:shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-all duration-400 hover:scale-105"
           >
             View My Work
           </a>
           <a
             href="#contact"
-            className="px-8 py-3.5 rounded-full border border-white/10 text-gray-300 font-semibold text-sm
+            className="px-8 py-3.5 rounded-full border border-white/10 text-ink-muted font-medium text-sm
               hover:border-violet/40 hover:text-violet transition-all duration-300 group flex items-center gap-2"
           >
             Get In Touch
