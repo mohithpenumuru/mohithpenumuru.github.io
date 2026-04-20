@@ -4,7 +4,7 @@ import { Mail, Linkedin, Github, Send, MapPin, Phone } from 'lucide-react'
 import SectionHeader from './ui/SectionHeader'
 
 // Paste your Web3Forms access key here. Get one (free) at https://web3forms.com
-const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY'
+const WEB3FORMS_ACCESS_KEY = '9986e52f-34e0-42bd-9504-78cb690e0478'
 
 function TerminalBlock() {
   return (
@@ -27,7 +27,10 @@ function TerminalBlock() {
         <div className="flex flex-wrap gap-x-1">
           <span className="text-violet">&gt;</span>
           <span className="text-ink-dim"> --location</span>
-          <span className="text-ink-muted"> bengaluru</span>
+          <span className="text-ink-muted"> bengaluru · hyderabad · chennai</span>
+        </div>
+        <div className="flex flex-wrap gap-x-1">
+          <span className="text-violet">&gt;</span>
           <span className="text-ink-dim"> --open-to</span>
           <span className="text-amber-400"> remote</span>
           <span className="text-ink-dim">|</span>
@@ -35,13 +38,13 @@ function TerminalBlock() {
         </div>
         <div className="flex flex-wrap gap-x-1">
           <span className="text-violet">&gt;</span>
-          <span className="text-ink-dim"> --expertise</span>
-          <span className="text-violet/80"> &quot;AI Agents · MCP&quot;</span>
+          <span className="text-ink-dim"> --domains</span>
+          <span className="text-violet/80"> &quot;AI Engineering · Data Engineering · Agentic Systems&quot;</span>
         </div>
         <div className="flex flex-wrap gap-x-1">
           <span className="text-violet">&gt;</span>
           <span className="text-ink-dim"> --stack</span>
-          <span className="text-accent"> &quot;Databricks · AWS · LangGraph · Snowflake&quot;</span>
+          <span className="text-accent"> &quot;Cloud Platforms · Lakehouse · Multi-Agent AI · IaC&quot;</span>
         </div>
         <div className="flex items-center gap-1">
           <span className="text-violet">&gt;</span>
