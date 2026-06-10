@@ -1,10 +1,40 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { Mail, Linkedin, Github, Send, MapPin, Phone } from 'lucide-react'
+import { Mail, Linkedin, Github, Send, Check, AlertTriangle, Loader2, ArrowUpRight } from 'lucide-react'
 import SectionHeader from './ui/SectionHeader'
+import Magnetic from './ui/Magnetic'
+import { spotlightMove } from './ui/spotlight'
 
-// Paste your Web3Forms access key here. Get one (free) at https://web3forms.com
-const WEB3FORMS_ACCESS_KEY = '9986e52f-34e0-42bd-9504-78cb690e0478'
+// Web3Forms delivery endpoint + access key. Get a free key at https://web3forms.com
+const FORM_ENDPOINT = 'https://api.web3forms.com/submit'
+const FORM_KEY = '9986e52f-34e0-42bd-9504-78cb690e0478'
+
+const channels = [
+  {
+    icon: Mail,
+    label: 'Email',
+    value: 'mohithpenumuru1@gmail.com',
+    href: 'mailto:mohithpenumuru1@gmail.com',
+  },
+  {
+    icon: Linkedin,
+    label: 'LinkedIn',
+    value: 'mohith-penumuru',
+    href: 'https://www.linkedin.com/in/mohith-penumuru-3b9793205/',
+  },
+  {
+    icon: Github,
+    label: 'GitHub',
+    value: 'mohithpenumuru',
+    href: 'https://github.com/mohithpenumuru',
+  },
+]
+
+// Form inputs are rendered from this config rather than literal markup.
+const inputRows = [
+  { key: 'name', title: 'Your name', kind: 'text', hint: 'Ada Lovelace' },
+  { key: 'email', title: 'Your email', kind: 'email', hint: 'you@company.com' },
+]
 
 function TerminalBlock() {
   return (
@@ -56,188 +86,179 @@ function TerminalBlock() {
   )
 }
 
+function ChannelCard({ channel, index, inView }) {
+  const Icon = channel.icon
+  return (
+    <motion.a
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.35 + index * 0.08 }}
+      href={channel.href}
+      target={channel.href.startsWith('mailto') ? undefined : '_blank'}
+      rel={channel.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+      onMouseMove={spotlightMove}
+      className="glass glass-hover spotlight-card flex items-center gap-4 px-5 py-4 group"
+    >
+      <div className="w-9 h-9 rounded-lg bg-violet/10 flex items-center justify-center shrink-0 group-hover:bg-violet/20 transition-colors duration-300">
+        <Icon size={16} className="text-violet" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="font-mono text-[9px] text-ink-dim uppercase tracking-[0.25em] mb-0.5">{channel.label}</p>
+        <p className="text-ink-muted text-sm truncate group-hover:text-ink transition-colors duration-300">
+          {channel.value}
+        </p>
+      </div>
+      <ArrowUpRight
+        size={15}
+        className="text-ink-faint group-hover:text-violet group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 shrink-0"
+      />
+    </motion.a>
+  )
+}
+
 export default function Contact() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
-  const [status, setStatus] = useState('idle')
-  const [errorMsg, setErrorMsg] = useState('')
+  const [phase, setPhase] = useState('idle') // idle | busy | done | failed
 
-  const handleSubmit = async (e) => {
+  async function deliver(e) {
     e.preventDefault()
-    setStatus('sending')
-    setErrorMsg('')
+    if (phase === 'busy') return
+    setPhase('busy')
 
-    const formData = new FormData(e.target)
-    formData.append('access_key', WEB3FORMS_ACCESS_KEY)
-    if (!formData.get('subject')) {
-      formData.set('subject', 'New message from portfolio site')
-    }
+    const payload = new FormData(e.target)
+    payload.append('access_key', FORM_KEY)
+    payload.append('subject', 'New message from portfolio')
 
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData,
-      })
-      const data = await res.json()
-
-      if (data.success) {
-        setStatus('success')
+      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: payload })
+      const body = await res.json()
+      if (body.success) {
+        setPhase('done')
         e.target.reset()
-        setTimeout(() => setStatus('idle'), 4000)
       } else {
-        setStatus('error')
-        setErrorMsg(data.message || 'Submission failed. Please try again.')
+        setPhase('failed')
       }
     } catch {
-      setStatus('error')
-      setErrorMsg('Network error. Please check your connection and try again.')
+      setPhase('failed')
     }
   }
-
-  const sending = status === 'sending'
-  const buttonLabel = sending ? 'Sending...' : status === 'success' ? 'Sent' : status === 'error' ? 'Try Again' : 'Send Message'
 
   return (
     <section id="contact" className="section-pad" ref={ref}>
       <div className="max-w-[1120px] mx-auto">
         <SectionHeader
           number="07"
-          title="Let us build something."
+          title="Let's build together."
           italicWord="build"
-          subtitle="Open to AI & data engineering roles, consulting, and cloud platform projects."
+          subtitle="Have a project, a role, or an idea worth exploring? My inbox is open."
         />
 
-        <div className="grid md:grid-cols-[1fr_360px] gap-10">
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: -20 }}
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          {/* Left — terminal + direct channels */}
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass p-8 space-y-5"
-          >
-            {/* Honeypot — bots fill this, humans don't see it */}
-            <input
-              type="checkbox"
-              name="botcheck"
-              tabIndex={-1}
-              autoComplete="off"
-              style={{ display: 'none' }}
-            />
-            <input type="hidden" name="from_name" value="Portfolio Contact Form" />
-
-            <div className="grid sm:grid-cols-2 gap-5">
-              <div>
-                <label htmlFor="name" className="font-mono text-[11px] text-ink-dim uppercase tracking-wider mb-1.5 block">Name</label>
-                <input
-                  id="name" name="name" type="text" required
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-ink placeholder-ink-faint
-                    focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
-                  placeholder="John Doe"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="font-mono text-[11px] text-ink-dim uppercase tracking-wider mb-1.5 block">Email</label>
-                <input
-                  id="email" name="email" type="email" required
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-ink placeholder-ink-faint
-                    focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
-                  placeholder="john@example.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="subject" className="font-mono text-[11px] text-ink-dim uppercase tracking-wider mb-1.5 block">Subject</label>
-              <input
-                id="subject" name="subject" type="text"
-                className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-ink placeholder-ink-faint
-                  focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors"
-                placeholder="Project inquiry"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="font-mono text-[11px] text-ink-dim uppercase tracking-wider mb-1.5 block">Message</label>
-              <textarea
-                id="message" name="message" rows={5} required
-                className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-ink placeholder-ink-faint
-                  focus:border-violet/40 focus:outline-none focus:ring-1 focus:ring-violet/20 transition-colors resize-none"
-                placeholder="Tell me about your project..."
-              />
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <button
-                type="submit"
-                disabled={sending}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-violet to-accent text-ink font-mono text-[11px] uppercase tracking-wider
-                  hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {buttonLabel}
-                <Send size={13} />
-              </button>
-
-              {status === 'success' && (
-                <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider">
-                  Thanks — I will get back to you soon.
-                </span>
-              )}
-              {status === 'error' && (
-                <span className="font-mono text-[11px] text-red-400">
-                  {errorMsg}
-                </span>
-              )}
-            </div>
-          </motion.form>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="space-y-5"
+            className="space-y-4"
           >
             <TerminalBlock />
-
-            <div className="glass p-6">
-              <p className="font-mono text-[10px] text-ink-dim uppercase tracking-[0.25em] mb-4">Direct</p>
-              <div className="space-y-3">
-                <a href="mailto:mohithpenumuru1@gmail.com" className="flex items-center gap-3 text-sm text-ink-muted hover:text-violet transition-colors">
-                  <Mail size={14} className="text-violet" />
-                  mohithpenumuru1@gmail.com
-                </a>
-                <a href="tel:+919052472001" className="flex items-center gap-3 text-sm text-ink-muted hover:text-violet transition-colors">
-                  <Phone size={14} className="text-violet" />
-                  +91 9052472001
-                </a>
-                <div className="flex items-center gap-3 text-sm text-ink-muted">
-                  <MapPin size={14} className="text-violet" />
-                  Bengaluru, India
-                </div>
-              </div>
+            <div className="grid gap-3">
+              {channels.map((channel, i) => (
+                <ChannelCard key={channel.label} channel={channel} index={i} inView={inView} />
+              ))}
             </div>
+          </motion.div>
 
-            <div className="glass p-6">
-              <p className="font-mono text-[10px] text-ink-dim uppercase tracking-[0.25em] mb-4">Socials</p>
-              <div className="flex gap-3">
-                {[
-                  { icon: Linkedin, href: 'https://www.linkedin.com/in/mohith-penumuru-3b9793205/', label: 'LinkedIn' },
-                  { icon: Github,   href: 'https://github.com/mohithpenumuru', label: 'GitHub' },
-                  { icon: Mail,     href: 'mailto:mohithpenumuru1@gmail.com', label: 'Email' },
-                ].map(({ icon: Icon, href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target={href.startsWith('mailto') ? undefined : '_blank'}
-                    rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                    className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center
-                      text-ink-dim hover:text-violet hover:border-violet/30 hover:bg-violet/5 transition-all duration-300"
-                    aria-label={label}
-                  >
-                    <Icon size={15} />
-                  </a>
+          {/* Right — message composer */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            onMouseMove={spotlightMove}
+            className="glass spotlight-card p-7"
+          >
+            <p className="font-mono text-[10px] text-ink-dim uppercase tracking-[0.25em] mb-6">
+              // drop a message
+            </p>
+
+            <form onSubmit={deliver} className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                {inputRows.map((row) => (
+                  <label key={row.key} className="block">
+                    <span className="font-mono text-[10px] text-ink-dim uppercase tracking-[0.2em] block mb-2">
+                      {row.title}
+                    </span>
+                    <input
+                      type={row.kind}
+                      name={row.key}
+                      required
+                      placeholder={row.hint}
+                      autoComplete="off"
+                      className="field"
+                    />
+                  </label>
                 ))}
               </div>
-            </div>
+
+              <label className="block">
+                <span className="font-mono text-[10px] text-ink-dim uppercase tracking-[0.2em] block mb-2">
+                  What's on your mind
+                </span>
+                <textarea
+                  name="message"
+                  required
+                  rows={6}
+                  placeholder="Tell me about your project, role, or idea…"
+                  className="field resize-none"
+                />
+              </label>
+
+              <div className="flex items-center justify-between gap-4 pt-1">
+                <Magnetic strength={0.25}>
+                  <button
+                    type="submit"
+                    disabled={phase === 'busy'}
+                    className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-gradient-to-r from-violet to-accent
+                      text-ink font-semibold text-sm shine disabled:opacity-60 disabled:cursor-not-allowed
+                      hover:shadow-[0_0_35px_rgba(139,92,246,0.35)] transition-all duration-400"
+                  >
+                    {phase === 'busy' ? (
+                      <>
+                        <Loader2 size={15} className="animate-spin" />
+                        Sending…
+                      </>
+                    ) : (
+                      <>
+                        <Send size={15} />
+                        Send Message
+                      </>
+                    )}
+                  </button>
+                </Magnetic>
+
+                {phase === 'done' && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-1.5 font-mono text-[11px] text-emerald-400"
+                  >
+                    <Check size={13} />
+                    Delivered — I'll reply soon.
+                  </motion.p>
+                )}
+                {phase === 'failed' && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-1.5 font-mono text-[11px] text-amber-400"
+                  >
+                    <AlertTriangle size={13} />
+                    Something broke — email me directly.
+                  </motion.p>
+                )}
+              </div>
+            </form>
           </motion.div>
         </div>
       </div>

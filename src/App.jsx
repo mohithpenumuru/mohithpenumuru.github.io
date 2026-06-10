@@ -8,10 +8,18 @@ import Projects from './components/Projects'
 import Publication from './components/Publication'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import IntroCurtain from './components/ui/IntroCurtain'
+import ScrollProgress from './components/ui/ScrollProgress'
+import CursorGlow from './components/ui/CursorGlow'
+import BackToTop from './components/ui/BackToTop'
 
 export default function App() {
   return (
     <div className="font-body noise relative">
+      <IntroCurtain />
+      <ScrollProgress />
+      <CursorGlow />
+
       {/* Fixed gradient mesh blobs — creates depth across the entire page */}
       <div className="mesh-gradient">
         <div
@@ -59,6 +67,8 @@ export default function App() {
         <Contact />
         <Footer />
       </div>
+
+      <BackToTop />
     </div>
   )
 }

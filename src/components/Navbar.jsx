@@ -3,22 +3,40 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
-  { num: '01', label: 'About', href: '#about' },
-  { num: '02', label: 'Work', href: '#experience' },
-  { num: '03', label: 'Skills', href: '#skills' },
-  { num: '04', label: 'Certs', href: '#certifications' },
-  { num: '05', label: 'Projects', href: '#projects' },
-  { num: '07', label: 'Contact', href: '#contact' },
+  { num: '01', label: 'About', href: '#about', id: 'about' },
+  { num: '02', label: 'Work', href: '#experience', id: 'experience' },
+  { num: '03', label: 'Skills', href: '#skills', id: 'skills' },
+  { num: '04', label: 'Certs', href: '#certifications', id: 'certifications' },
+  { num: '05', label: 'Projects', href: '#projects', id: 'projects' },
+  { num: '07', label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [activeId, setActiveId] = useState('')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Highlight the nav link whose section currently occupies mid-viewport
+  useEffect(() => {
+    const sections = navLinks
+      .map((l) => document.getElementById(l.id))
+      .filter(Boolean)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveId(entry.target.id)
+        }
+      },
+      { rootMargin: '-35% 0px -55% 0px' }
+    )
+    sections.forEach((s) => observer.observe(s))
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -41,16 +59,30 @@ export default function Navbar() {
         </a>
 
         <div className="hidden md:flex items-center gap-7">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="font-mono text-[11px] text-ink-muted hover:text-ink transition-colors duration-300 tracking-wider"
-            >
-              <span className="text-violet/70 mr-1.5">{link.num}</span>
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const active = activeId === link.id
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`relative font-mono text-[11px] transition-colors duration-300 tracking-wider ${
+                  active ? 'text-ink' : 'text-ink-muted hover:text-ink'
+                }`}
+              >
+                <span className={`mr-1.5 transition-colors duration-300 ${active ? 'text-violet' : 'text-violet/70'}`}>
+                  {link.num}
+                </span>
+                {link.label}
+                {active && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                    className="absolute -bottom-1.5 left-0 right-0 h-px bg-gradient-to-r from-violet to-accent"
+                  />
+                )}
+              </a>
+            )
+          })}
           <a
             href="./resume.pdf"
             target="_blank"
@@ -85,7 +117,9 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="font-mono text-sm text-ink-muted hover:text-violet transition-colors py-1"
+                  className={`font-mono text-sm transition-colors py-1 ${
+                    activeId === link.id ? 'text-violet' : 'text-ink-muted hover:text-violet'
+                  }`}
                   onClick={() => setMobileOpen(false)}
                 >
                   <span className="text-violet/70 mr-2">{link.num}</span>

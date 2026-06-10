@@ -3,6 +3,7 @@ import { useRef, useState } from 'react'
 import { ExternalLink, Github, ChevronRight } from 'lucide-react'
 import SectionHeader from './ui/SectionHeader'
 import MetricBadge from './ui/MetricBadge'
+import TiltCard from './ui/TiltCard'
 
 /**
  * Headline metrics — placeholder values approved in spec §3.7.
@@ -123,10 +124,11 @@ function ProjectCard({ project, index }) {
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="glass project-glow p-7 flex flex-col group"
+      className="h-full"
       onMouseEnter={() => setShowPipeline(true)}
       onMouseLeave={() => setShowPipeline(false)}
     >
+      <TiltCard maxTilt={5} className="glass project-glow p-7 flex flex-col group h-full">
       <div className="flex items-start justify-between mb-5">
         <MetricBadge value={project.metric.value} label={project.metric.label} />
         <button
@@ -171,6 +173,7 @@ function ProjectCard({ project, index }) {
           </a>
         )}
       </div>
+      </TiltCard>
     </motion.div>
   )
 }

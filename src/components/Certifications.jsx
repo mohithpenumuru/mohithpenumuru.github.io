@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Award } from 'lucide-react'
 import SectionHeader from './ui/SectionHeader'
+import { spotlightMove } from './ui/spotlight'
 
 const certifications = [
   { name: 'Certified Data Engineer Associate', provider: 'AWS',         accent: 'from-amber-500/20 to-orange-600/20', text: 'text-amber-400', bg: 'bg-amber-500/10' },
@@ -26,7 +27,8 @@ function CertCard({ cert, index }) {
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.45, delay: index * 0.05 }}
-      className="relative glass glass-hover p-5 group overflow-hidden"
+      onMouseMove={spotlightMove}
+      className="relative glass glass-hover spotlight-card shine p-5 group overflow-hidden"
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${cert.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`} />
       <div className="relative z-10">

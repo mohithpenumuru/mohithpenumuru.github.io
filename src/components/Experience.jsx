@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useScroll, useTransform, motion, useInView } from 'framer-motion'
 import { GraduationCap } from 'lucide-react'
 import SectionHeader from './ui/SectionHeader'
+import { spotlightMove } from './ui/spotlight'
 
 const timelineData = [
   {
@@ -118,7 +119,7 @@ function TimelineEntry({ title, content, isEducation }) {
       <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
         <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-surface flex items-center justify-center">
           <div
-            className={`h-4 w-4 rounded-full border ${
+            className={`h-4 w-4 rounded-full border node-pulse ${
               isEducation
                 ? 'bg-violet/20 border-violet/40'
                 : 'bg-violet/10 border-violet/40'
@@ -139,7 +140,8 @@ function TimelineEntry({ title, content, isEducation }) {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="glass p-7"
+          onMouseMove={spotlightMove}
+          className="glass spotlight-card p-7"
         >
           {isEducation ? (
             <>

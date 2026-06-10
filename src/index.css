@@ -267,9 +267,121 @@
   transform: rotate(45deg);
 }
 
+/* ── Mouse-Tracked Spotlight ── */
+.spotlight-card {
+  position: relative;
+}
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    480px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(139, 92, 246, 0.09),
+    rgba(34, 211, 238, 0.03) 45%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Marquee ── */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee {
+  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+}
+.marquee-track {
+  animation: marqueeScroll 28s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ── Shine Sweep ── */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+.shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-160%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.055), transparent);
+  transition: transform 0.9s ease;
+  pointer-events: none;
+}
+.shine:hover::after {
+  transform: translateX(160%);
+}
+
+/* ── Animated Gradient Text ── */
+@keyframes gradientPan {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+.gradient-text-animate {
+  background-size: 200% auto;
+  animation: gradientPan 6s linear infinite;
+}
+
+/* ── Form Fields (Contact) ── */
+.field {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+  color: #fafafa;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.field::placeholder {
+  color: #525252;
+}
+.field:focus {
+  outline: none;
+  border-color: rgba(139, 92, 246, 0.45);
+  background: rgba(139, 92, 246, 0.03);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.08), 0 0 25px rgba(139, 92, 246, 0.06);
+}
+
+/* ── Timeline Node Pulse ── */
+@keyframes nodePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.3); }
+  50%      { box-shadow: 0 0 0 6px rgba(139, 92, 246, 0); }
+}
+.node-pulse {
+  animation: nodePulse 2.6s ease-in-out infinite;
+}
+
 /* ── Section Util ── */
 @layer components {
   .section-pad {
     @apply px-6 py-32 md:px-12 md:py-40 lg:px-24 xl:px-32;
+  }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }

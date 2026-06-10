@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { spotlightMove } from './spotlight'
 
 const SPAN_CLASSES = {
   '1x1': 'md:col-span-1 md:row-span-1',
@@ -19,7 +20,8 @@ const ACCENT_CLASSES = {
 }
 
 /**
- * Variable-size glass tile for the Skills bento grid.
+ * Variable-size glass tile for the Skills bento grid, with a
+ * mouse-tracked spotlight highlight.
  *
  * @param {'1x1'|'2x1'|'2x2'} span     Grid span (md+ breakpoints).
  * @param {string}            label    Mono category label.
@@ -39,7 +41,8 @@ export default function BentoTile({ span, label, accent, featured, index = 0, ch
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className={`relative glass p-6 transition-all duration-500 hover:-translate-y-1 hover:border-opacity-30 overflow-hidden ${SPAN_CLASSES[span]} ${colors.border}`}
+      onMouseMove={spotlightMove}
+      className={`relative glass spotlight-card p-6 transition-all duration-500 hover:-translate-y-1 hover:border-opacity-30 overflow-hidden ${SPAN_CLASSES[span]} ${colors.border}`}
     >
       {featured && (
         <div className="pointer-events-none absolute inset-0 opacity-20">

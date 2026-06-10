@@ -3,12 +3,20 @@ import { useRef } from 'react'
 import { MapPin, Briefcase, GraduationCap, Phone } from 'lucide-react'
 import SectionHeader from './ui/SectionHeader'
 import RadialOrbital from './ui/RadialOrbital'
+import Counter from './ui/Counter'
 
 const quickFacts = [
   { icon: MapPin, text: 'Bengaluru, India' },
   { icon: Briefcase, text: 'AI Engineer @ Deloitte' },
   { icon: GraduationCap, text: 'B.Tech, ECE' },
   { icon: Phone, text: '+91 9052472001' },
+]
+
+const stats = [
+  { value: 3, suffix: '+', label: 'Years in Data & AI' },
+  { value: 10, suffix: '', label: 'Cloud Certifications' },
+  { value: 4, suffix: '+', label: 'AI Agents in Production' },
+  { value: 1, suffix: '', label: 'Springer Publication' },
 ]
 
 export default function About() {
@@ -58,7 +66,7 @@ export default function About() {
               turning enterprise data into autonomous decision-making.
             </p>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-10">
               {quickFacts.map(({ icon: Icon, text }) => (
                 <div
                   key={text}
@@ -67,6 +75,26 @@ export default function About() {
                   <Icon size={12} className="text-violet" />
                   {text}
                 </div>
+              ))}
+            </div>
+
+            {/* Animated stat counters */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {stats.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.45 + i * 0.08 }}
+                  className="glass p-4 text-center sm:text-left"
+                >
+                  <div className="font-mono text-2xl md:text-3xl text-violet font-medium leading-none mb-2">
+                    <Counter to={stat.value} suffix={stat.suffix} />
+                  </div>
+                  <div className="font-mono text-[9px] text-ink-dim uppercase tracking-[0.15em] leading-relaxed">
+                    {stat.label}
+                  </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
